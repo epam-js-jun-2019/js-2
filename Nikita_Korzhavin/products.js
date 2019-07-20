@@ -1,6 +1,7 @@
 function product(price, calories) {
-  this.calories = calories || 0;
   this.price = price || 0;
+  this.calories = calories || 0;
+  
 }
 
 product.prototype.calculatePrice = function() {

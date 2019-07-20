@@ -1,6 +1,15 @@
 var product = require('./products.js');
+var hamburger = require('./hamburger');
+/*var hamburger = require('./salad');
+var hamburger = require('./order');
 
-//var product1 = new product(122, 2323);
 
-console.log(product.prototype);
-//console.log(product1.calculatePrice());
+
+console.log()
+*/
+var product1 = new product(122, 2323);
+
+
+
+
+
