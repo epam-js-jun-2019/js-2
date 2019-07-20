@@ -1,11 +1,26 @@
-function drink(name) {
-  this.name = name;
+//Schema how the inheritance works
+// food    food    food  order  
+//   |       |       |
+// drink hamburger salad
+
+// constructor 
+// @name name of ordered item
+function food(name){
+  this.name = name
 }
+food.prototype.getName = function(){
+  if (this.stuffing) return `${this.name} - ${this.stuffing}`
+  return this.name
+}
+
+
+function drink(name) {
+  food.call(this,name)
+}
+//inheritance 
+drink.prototype = Object.create(food.prototype)
 drink.COFFEE = { price: 50, calories: 40 };
 drink.COLA = { price: 80, calories: 20 };
-drink.prototype.getName = function() {
-  return this.name;
-};
 
 drink.prototype.calculatePrice = function() {
   if (this.price) {
@@ -35,19 +50,15 @@ drink.prototype.calculateCalories = function() {
 };
 
 function hamburger(name, stuffing) {
-  this.name = name;
+  food.call(this,name)
   this.stuffing = stuffing;
 }
-
+hamburger.prototype = Object.create(food.prototype)
 hamburger.SIZE_SMALL = { price: 50, calories: 20 };
 hamburger.SIZE_LARGE = { price: 100, calories: 40 };
 hamburger.STUFFING_CHEESE = { price: 10, calories: 20 };
 hamburger.STUFFING_SALAD = { price: 20, calories: 5 };
 hamburger.STUFFING_POTATO = { price: 15, calories: 10 };
-
-hamburger.prototype.getSize = function() {
-  return this.name;
-};
 
 hamburger.prototype.getStuffing = function() {
   return this.stuffing;
@@ -106,15 +117,11 @@ hamburger.prototype.calculateCalories = function() {
 };
 
 function salad(name) {
-  this.name = name;
+  food.call(this,name)  
 }
-
+salad.prototype = Object.create(food.prototype)
 salad.CAESAR = { price: 100, calories: 20 };
 salad.OLIVIE = { price: 50, calories: 80 };
-salad.prototype.getName = function() {
-  return this.name;
-};
-
 salad.prototype.calculatePrice = function() {
   if (this.price) {
     return this.price;
@@ -127,7 +134,6 @@ salad.prototype.calculatePrice = function() {
   }
   return this.price;
 };
-
 salad.prototype.calculateCalories = function() {
   if (this.calories) {
     return this.calories;
@@ -145,8 +151,8 @@ salad.prototype.calculateCalories = function() {
 function order() {
   this.orderList = [];
   if (arguments.length) {
-    for (let item in arguments) {
-      this.add(arguments[item]);
+    for (let idx in arguments) {
+      this.add(arguments[idx]);
     }
   }
 }
@@ -194,7 +200,7 @@ const hb = new hamburger("small", "cheese");
 const dr = new drink("coffee");
 const sal = new salad("caesar");
 const ord = new order(dr, sal);
+console.log(hb.getName())
+console.log(dr.getName())
+console.log(sal.getName())
 ord.add(hb);
-ord.getItems();
-ord.deleteItem("small", "cheese");
-ord.makePayment();
