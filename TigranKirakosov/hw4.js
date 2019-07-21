@@ -1,3 +1,4 @@
+'use strict';
 // Class Order
 function Order(customer) {
   this.customer = customer || 'Officiant :)';
@@ -32,6 +33,9 @@ Order.prototype.calcTotalCalories = function() {
   return `Provides ${this.positions.reduce(function(sum, position) {
     return sum + position.showCalories();
   }, 0)} calories`;
+};
+Order.prototype.payTheOrder = function() {
+  return Object.freeze(this), Object.freeze(this.positions);
 };
 
 // Class Food
@@ -148,6 +152,7 @@ Drink.prototype.showCalories = function() {
 ### showPositions()     || Show positions by its type
 ### calcTotalPrice()    || Show total price of an order
 ### calcTotalCalories() || Show total calories an order provides
+### payTheOrder()       || Pay an order and make it immutable
 ##
 #                   Food Interface
 ##
@@ -178,5 +183,12 @@ myDrink.chooseType('Cola'); // 'Coffee' or 'Cola'
 // Adding items to the order
 myOrder.addToOrder(myHamb, mySalad, myDrink);
 // Deleting item from the order
-myOrder.deleteFromOrder();
-console.log(myOrder.showPositions());
+myOrder.deleteFromOrder(myHamb);
+
+// Make payment
+myOrder.payTheOrder();
+
+// Test
+// myOrder.customer = 'Me';
+
+console.log(myOrder.calcTotalPrice());
