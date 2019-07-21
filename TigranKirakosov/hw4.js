@@ -16,7 +16,6 @@ Order.prototype.deleteFromOrder = function(position) {
     return posToKeep !== position;
   }));
 };
-// item should be a string: ex. 'size', 'stuffing', 'type'
 Order.prototype.showPositions = function() {
   return this.positions
     .map(function(position) {
