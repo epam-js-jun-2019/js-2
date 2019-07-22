@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 var product = require('./api/products.js');
 var CombinedProduct = require('./api/combinedProducts.js');
 var Hamburger = require('./hamburger.js');
@@ -39,3 +40,20 @@ console.log(ham.calculateCalories());
 console.log(ham.getSize());
 console.log(ham.getStuffing());
 */
+=======
+var product = require('./products.js');
+var hamburger = require('./hamburger');
+/*var hamburger = require('./salad');
+var hamburger = require('./order');
+
+
+
+console.log()
+*/
+var product1 = new product(122, 2323);
+
+
+
+
+
+>>>>>>> 9a5e0f6363438461f06cebf0527aaa88ced8c050
