@@ -7,7 +7,6 @@ function Drink(options) {
 
   // this.name для удобного поиска в заказе
   this.name = options;
-
   this.type =
     options.type === this.TYPE_COKE.name ? this.TYPE_COKE : this.TYPE_COFFEE;
   // наследует от CombinedProduct для подсчета совокупных калорий и цены
