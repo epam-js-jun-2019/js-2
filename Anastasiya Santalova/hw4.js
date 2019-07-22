@@ -6,7 +6,6 @@
 
 function Order () {
     this.products = [];
-    console.log(this.products);
 }
 
 /**
@@ -31,7 +30,6 @@ Order.prototype.acceptDrink = function (Drink) {
 
 Order.prototype.deleteProduct = function (name) {
     this.products = this.products.filter((arg) => arg !== name);
-    //console.log(this.products);
 }
 
 /**
@@ -65,9 +63,12 @@ Order.prototype.calculateCalories = function () {
 
 Order.prototype.paid = function () {
 
+    this.products.forEach(Object.freeze);
+    Object.freeze(this.products);
     Object.freeze(this);
 
 }
+
 
 /**
 * * * * * * * CLASS FOOD * * * * * * * 
@@ -78,8 +79,9 @@ function Food(price, calories) {
     this.calories = calories;
 }
 
+
 /**
-* * * * * * * HAMBURGER * * * * * * * 
+* * * * * * * CLASS HAMBURGER * * * * * * * 
 */
 
 function Hamburger(size, stuffing) {
@@ -133,7 +135,7 @@ Hamburger.prototype = Object.create(Food.prototype);
 
 
 /**
-* * * * * * * SALAD * * * * * * *
+* * * * * * * CLASS SALAD * * * * * * *
 */
 
 function Salad(name) {
@@ -156,7 +158,7 @@ Salad.RUSSIAN_SALAD = [50, 80];
 
 
 /**
-* * * * * * * DRINK * * * * * * * 
+* * * * * * * CLASS DRINK * * * * * * * 
 */
 
 function Drink(type) {
@@ -184,43 +186,39 @@ Drink.COFFEE = [80, 20];
 //*********************************************************************************//
 
 var food = new Food();
-
 var order = new Order();
-console.log(order);
 
 var H1 = new Hamburger (Hamburger.SIZE_SMALL, [Hamburger.STUFFING_CHEESE, Hamburger.STUFFING_POTATO]);
-
-console.log(H1);
+var H2 = new Hamburger (Hamburger.SIZE_LARGE, Hamburger.STUFFING_SALAD);
+var drink = new Drink(Drink.COLA);
+var salad = new Salad(Salad.RUSSIAN_SALAD);
+var salad1 = new Salad(Salad.CAESAR);
 
 order.acceptHumburger(H1);
-
-console.log(order);
-
-var H2 = new Hamburger (Hamburger.SIZE_LARGE, Hamburger.STUFFING_SALAD);
-console.log(H2);
-
 order.acceptHumburger(H2);
-console.log(order);
-
-// console.log(food);
-
-var drink = new Drink(Drink.COLA);
 order.acceptDrink(drink);
-
-var salad = new Salad(Salad.RUSSIAN_SALAD);
 order.acceptSalad(salad);
-console.log(order);
 
 order.deleteProduct(H1);
-
-console.log(order);
 
 order.calculatePrice();
 order.calculateCalories();
 
-console.log(order);
+//console.log(order);
+
 
 order.paid();
-order.deleteProduct(salad);
-order.acceptHumburger(H2);
+
+try {
+    order.deleteProduct(salad);
+} catch(e) {
+    console.log("Изменение невозможно. Заказ оплачен.")
+}
+
+try {
+    order.acceptSalad(salad1);
+} catch(e) {
+    console.log("Изменение невозможно. Заказ оплачен.")
+}
+
 console.log(order);
