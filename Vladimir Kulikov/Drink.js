@@ -1,12 +1,11 @@
+var Product = require('./Product');
+
 function Drink(options) {
-  this.name = options.name;
+  Product.call(this, options);
 }
-Drink.prototype.getPrice = function() {
-  return Drink[this.name].price;
-};
-Drink.prototype.getCalories = function() {
-  return Drink[this.name].cal;
-};
+
+Drink.prototype = Object.create(Product.prototype);
+Drink.prototype.constructor = Drink;
 
 Drink.COLA = { price: 50, cal: 40 };
 Drink.COFFEE = { price: 80, cal: 20 };

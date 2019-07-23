@@ -2,9 +2,11 @@ function Hamburger(options) {
   this.size = options.size;
   this.stuffing = options.stuffing;
 }
+
 Hamburger.prototype.getPrice = function() {
   return Hamburger[this.size].price + Hamburger[this.stuffing].price;
 };
+
 Hamburger.prototype.getCalories = function() {
   return Hamburger[this.size].cal + Hamburger[this.stuffing].cal;
 };
