@@ -218,20 +218,20 @@ Order.prototype.totalCalories = function () {
     return totalCalories;
 };
 
+
+//---------- Testing ----------//
 var salad1 = new Salad(saladOptions.CEASAR);
 var drink1 = new Drink(drinkOptions.COFFEE);
 var sandw1 = new Hamburger(hamburgerOptions.SIZE_SMALL,
                            hamburgerOptions.STUFFING_SALAD,
                            hamburgerOptions.STUFFING_CHEESE);
-console.log(salad1);
-console.log(drink1);
-console.log(sandw1);
+
 console.log(sandw1.calculatePrice());
 console.log(sandw1.calculateCalories());
 console.log(sandw1.getStuffing());
 console.log(sandw1.getSize());
-var order1 = new Order();
 
+var order1 = new Order();
 order1.addItems(salad1, drink1, sandw1);
 
 var price1 = order1.totalPrice();
@@ -239,12 +239,11 @@ var calories1 = order1.totalCalories();
 console.log('Order 1 price: ' + price1 + ' tugs, calories: ' + calories1 + ' cals');
 
 order1.rmItem('Ceasar');
-var price1 = order1.totalPrice();
-var calories1 = order1.totalCalories();
+price1 = order1.totalPrice();
+calories1 = order1.totalCalories();
 console.log('Order 1 price: ' + price1 + ' tugs, calories: ' + calories1 + ' cals');
 
 order1.rmItem('small size');
-var price1 = order1.totalPrice();
-var calories1 = order1.totalCalories();
+price1 = order1.totalPrice();
+calories1 = order1.totalCalories();
 console.log('Order 1 price: ' + price1 + ' tugs, calories: ' + calories1 + ' cals');
-
