@@ -7,9 +7,8 @@ function Order(customer) {
 
 // Order methods
 Order.prototype.addToOrder = function() {
-  var args = Array.prototype.slice.call(arguments);
-  for (let arg of args) {
-    this.positions.push(arg);
+  for (var i = 0; i < arguments.length; i++) {
+    this.positions.push(arguments[i]);
   }
 };
 Order.prototype.deleteFromOrder = function(position) {
@@ -20,7 +19,7 @@ Order.prototype.deleteFromOrder = function(position) {
 Order.prototype.showPositions = function() {
   return this.positions
     .map(function(position) {
-      return position.foodType;
+      return position.description;
     })
     .join(', ');
 };
@@ -34,20 +33,53 @@ Order.prototype.calcTotalCalories = function() {
     return sum + position.showCalories();
   }, 0)} calories`;
 };
-Order.prototype.payTheOrder = function() {
+Order.prototype.makePayment = function() {
   return Object.freeze(this), Object.freeze(this.positions);
 };
 
 // Class Food
-function Food(foodType) {
-  this.foodType = foodType;
+function Food(description) {
+  this.description = description || 'Nameless position';
+  this.typeOfFood;
+  this.size;
+  this.addition;
 }
 
+// Food methods
+Food.prototype.chooseType = function(type, menu) {
+  return (this.typeOfFood = menu.filter(function(food) {
+    return food.type === type;
+  })[0]);
+};
+Food.prototype.chooseSize = function(type, menu) {
+  return (this.size = menu.filter(function(size) {
+    return size.type === type;
+  })[0]);
+};
+Food.prototype.chooseAddition = function(type, menu) {
+  return (this.addition = menu.filter(function(addition) {
+    return addition.type === type;
+  })[0]);
+};
+Food.prototype.showAddition = function() {
+  return `${this.addition.type} addition`;
+};
+Food.prototype.showPrice = function() {
+  return this.typeOfFood.tugric;
+};
+Food.prototype.showCalories = function() {
+  return this.typeOfFood.calories;
+};
+Food.prototype.showType = function() {
+  return `It is ${this.typeOfFood.type}`;
+};
+Food.prototype.showSize = function() {
+  return `${this.size.type} size`;
+};
+
 // Class Hamburger
-function Hamburger(foodType, size, stuffing) {
-  Food.call(this, foodType, size, stuffing);
-  this.size = size;
-  this.stuffing = stuffing;
+function Hamburger(description) {
+  Food.call(this, description);
 }
 Hamburger.prototype = Object.create(Food.prototype);
 
@@ -56,114 +88,64 @@ Hamburger.SIZES = [
   { type: 'Small', tugric: 50, calories: 20 },
   { type: 'Large', tugric: 100, calories: 40 }
 ];
-Hamburger.STUFFINGS = [
+Hamburger.ADDITIONS = [
   { type: 'Cheese', tugric: 10, calories: 20 },
   { type: 'Salad', tugric: 20, calories: 5 },
   { type: 'Potato', tugric: 15, calories: 10 }
 ];
 
 // Hamburger methods
-Hamburger.prototype.chooseSize = function(type) {
-  return (this.size = Hamburger.SIZES.filter(function(size) {
-    return size.type === type;
-  })[0]);
-};
-Hamburger.prototype.chooseStuffing = function(type) {
-  return (this.stuffing = Hamburger.STUFFINGS.filter(function(stuffing) {
-    return stuffing.type === type;
-  })[0]);
-};
-Hamburger.prototype.showSizeType = function() {
-  return `${this.size.type} size`;
-};
-Hamburger.prototype.showStuffingType = function() {
-  return `${this.stuffing.type} stuffing`;
-};
 Hamburger.prototype.showPrice = function() {
-  return this.size.tugric + this.stuffing.tugric;
+  return this.size.tugric + this.addition.tugric;
 };
 Hamburger.prototype.showCalories = function() {
-  return this.size.calories + this.stuffing.calories;
+  return this.size.calories + this.addition.calories;
 };
 
 // Class Salad
-function Salad(foodType) {
-  Food.call(this, foodType);
-  this.typeOfSalad;
+function Salad(description) {
+  Food.call(this, description);
 }
 Salad.prototype = Object.create(Food.prototype);
 
 // Salad constant vars
-Salad.TYPES = [
+Salad.MENU = [
   { type: 'Caesar', tugric: 100, calories: 20 },
   { type: 'Olivier', tugric: 50, calories: 80 }
 ];
 
-// Salad methods
-Salad.prototype.chooseType = function(type) {
-  return (this.typeOfSalad = Salad.TYPES.filter(function(salad) {
-    return salad.type === type;
-  })[0]);
-};
-Salad.prototype.showType = function() {
-  return `It is ${this.typeOfSalad.type} salad`;
-};
-Salad.prototype.showPrice = function() {
-  return this.typeOfSalad.tugric;
-};
-Salad.prototype.showCalories = function() {
-  return this.typeOfSalad.calories;
-};
-
 // Class Drink
-function Drink(foodType) {
-  Food.call(this, foodType);
-  this.typeOfDrink;
+function Drink(description) {
+  Food.call(this, description);
 }
 Drink.prototype = Object.create(Food.prototype);
 
 // Drink constant vars
-Drink.TYPES = [
+Drink.MENU = [
   { type: 'Cola', tugric: 50, calories: 40 },
   { type: 'Coffee', tugric: 80, calories: 20 }
 ];
 
-// Drink methods
-Drink.prototype.chooseType = function(type) {
-  return (this.typeOfDrink = Drink.TYPES.filter(function(drink) {
-    return drink.type === type;
-  })[0]);
-};
-Drink.prototype.showType = function() {
-  return `It is ${this.typeOfDrink.type}`;
-};
-Drink.prototype.showPrice = function() {
-  return this.typeOfDrink.tugric;
-};
-Drink.prototype.showCalories = function() {
-  return this.typeOfDrink.calories;
-};
-
 /* 
-#                   Order Interface
+#                           Order Interface
 ##
-### addToOrder()        || Add multiple items
-### deleteFromOrder()   || Delete a certain item
-### showPositions()     || Show positions by its type
-### calcTotalPrice()    || Show total price of an order
-### calcTotalCalories() || Show total calories an order provides
-### payTheOrder()       || Pay an order and make it immutable
+### addToOrder(arg1, arg2, ...)   || Add multiple items
+### deleteFromOrder(position)     || Delete certain position
+### showPositions()               || Show positions by its type
+### calcTotalPrice()              || Show total price of an order
+### calcTotalCalories()           || Show total calories an order provides
+### makePayment()                 || Pay an order and make it immutable
 ##
-#                   Food Interface
+#                           Food Interface
 ##
-### chooseSize()        || Sets size type (Hamburger)
-### showSizeType()      || Shows size type (Hamburger)
-### chooseStuffing()    || Sets stuffing type (Hamburger)
-### showStuffingType()  || Shows stuffing type (Hamburger)
-### chooseType()        || Sets type (All except Hamburger)
-### showType()          || Shows type (All except Hamburger)
-### showPrice()         || Shows price (All)
-### showCalories()      || Shows calories (All)
+### chooseAddition(type, menu)    || Sets addition from menu
+### chooseType(type, menu)        || Sets type from menu
+### chooseSize(type, menu)        || Sets size from menu
+### showSize()                    || Shows size type
+### showAddition()                || Shows addition type
+### showType()                    || Shows type
+### showPrice()                   || Shows price
+### showCalories()                || Shows calories
 ##
 # 
 */
@@ -171,24 +153,21 @@ Drink.prototype.showCalories = function() {
 // Instantiating objects
 var myOrder = new Order('Tigran');
 var myHamb = new Hamburger('Hamburger');
-var mySalad = new Salad('Salad');
-var myDrink = new Drink('Drink');
+var mySalad = new Salad('Olivier salad');
+var myDrink = new Drink('Cola');
 
 // Configurating food properties
-myHamb.chooseSize('Large'); // 'Large' or 'Small'
-myHamb.chooseStuffing('Potato'); // 'Cheese', 'Salad' or 'Potato'
-mySalad.chooseType('Olivier'); // 'Caesar' or 'Olivier'
-myDrink.chooseType('Cola'); // 'Coffee' or 'Cola'
+myHamb.chooseSize('Large', Hamburger.SIZES); // 'Large' or 'Small'
+myHamb.chooseAddition('Potato', Hamburger.ADDITIONS); // 'Cheese', 'Salad' or 'Potato'
+mySalad.chooseType('Olivier', Salad.MENU); // 'Caesar' or 'Olivier'
+myDrink.chooseType('Cola', Drink.MENU); // 'Coffee' or 'Cola'
 
 // Adding items to the order
-myOrder.addToOrder(myHamb, mySalad, myDrink);
+myOrder.addToOrder(myHamb, myDrink, mySalad);
 // Deleting item from the order
-myOrder.deleteFromOrder(myHamb);
+// myOrder.deleteFromOrder(mySalad);
 
 // Make payment
-myOrder.payTheOrder();
-
-// Test
-// myOrder.customer = 'Me';
+// myOrder.makePayment();
 
 console.log(myOrder.calcTotalPrice());
