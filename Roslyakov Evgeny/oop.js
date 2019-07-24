@@ -73,7 +73,7 @@ hamburgerOptions.STUFFING_POTATO = {
 
 /* Get the humburger size (name) */
 Hamburger.prototype.getSize = function () {
-    this.getName.call(this);
+    return this.getName.call(this);
 };
 
 /* Get the humburger stuffing */
@@ -164,12 +164,16 @@ function Order() {
 /* Add new item(s) in order */
 Order.prototype.addItems = function() {
     this.items = this.items.concat([].slice.call(arguments));
+    return this;
 };
 
 /* Delete selected item from the order */
 Order.prototype.rmItem = function(rmName) {
     if(this.items.length !== 0) {
         this.items = this.items.filter(function (item) {
+            if(!item.name) {
+                return item.size.name !== rmName;
+            }
             return item.name !== rmName;
         });
         return this.items;
@@ -181,18 +185,22 @@ Order.prototype.rmItem = function(rmName) {
 /* Pay for order */
 Order.prototype.payForOrder = function() {
     this.items.forEach(function (item) {
+        if(!item.name) {
+            for(var key in item) {
+                item[key] = Object.freeze(item[key]);
+            }
+        }
         item = Object.freeze(item);
     });
     this.items = Object.freeze(this.items);
+    return this.totalPrice();
 };
 
 /* Calculate order cost */
 Order.prototype.totalPrice = function () {
-    this.payForOrder();
     var totalPrice = this.items.reduce(function (acc, cur) {
         if(cur.price === undefined) {
-            var hamPrice = cur.calculatePrice();
-            return acc + hamPrice;
+            return acc + cur.calculatePrice();
         };
         return acc + cur.price;
     }, 0);
@@ -201,7 +209,6 @@ Order.prototype.totalPrice = function () {
 
 /* Calculate order calories */
 Order.prototype.totalCalories = function () {
-    this.payForOrder();
     var totalCalories = this.items.reduce(function (acc, cur) {
         if(cur.calories === undefined) {
             return acc + cur.calculateCalories();
@@ -221,6 +228,8 @@ console.log(drink1);
 console.log(sandw1);
 console.log(sandw1.calculatePrice());
 console.log(sandw1.calculateCalories());
+console.log(sandw1.getStuffing());
+console.log(sandw1.getSize());
 var order1 = new Order();
 
 order1.addItems(salad1, drink1, sandw1);
@@ -230,6 +239,11 @@ var calories1 = order1.totalCalories();
 console.log('Order 1 price: ' + price1 + ' tugs, calories: ' + calories1 + ' cals');
 
 order1.rmItem('Ceasar');
+var price1 = order1.totalPrice();
+var calories1 = order1.totalCalories();
+console.log('Order 1 price: ' + price1 + ' tugs, calories: ' + calories1 + ' cals');
+
+order1.rmItem('small size');
 var price1 = order1.totalPrice();
 var calories1 = order1.totalCalories();
 console.log('Order 1 price: ' + price1 + ' tugs, calories: ' + calories1 + ' cals');
