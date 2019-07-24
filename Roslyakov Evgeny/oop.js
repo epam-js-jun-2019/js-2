@@ -183,6 +183,7 @@ Order.prototype.payForOrder = function() {
     this.items.forEach(function (item) {
         item = Object.freeze(item);
     });
+    this.items = Object.freeze(this.items);
 };
 
 /* Calculate order cost */
@@ -218,11 +219,18 @@ var sandw1 = new Hamburger(hamburgerOptions.SIZE_SMALL,
 console.log(salad1);
 console.log(drink1);
 console.log(sandw1);
+console.log(sandw1.calculatePrice());
+console.log(sandw1.calculateCalories());
 var order1 = new Order();
 
 order1.addItems(salad1, drink1, sandw1);
 
-// var price1 = order1.totalPrice();
-// var calories1 = order1.totalCalories();
-// console.log('Order 1 price: ' + price1 + ', calories: ' + calories1);
+var price1 = order1.totalPrice();
+var calories1 = order1.totalCalories();
+console.log('Order 1 price: ' + price1 + ' tugs, calories: ' + calories1 + ' cals');
+
+order1.rmItem('Ceasar');
+var price1 = order1.totalPrice();
+var calories1 = order1.totalCalories();
+console.log('Order 1 price: ' + price1 + ' tugs, calories: ' + calories1 + ' cals');
 
