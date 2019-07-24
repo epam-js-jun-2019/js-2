@@ -182,6 +182,27 @@ Order.prototype.rmItem = function(rmName) {
     }
 };
 
+/* Print the order contents  */
+Order.prototype.printOrder = function() {
+    var orderList = '----- the order contains:\n';
+    if(this.items.length !== 0) {
+        this.items.forEach(function (item) {
+            if(!item.name) {
+                var hamburger = '----- ' + item.size.name + ' hamburger';
+                item.stuffing.forEach(function (stuffing) {
+                    hamburger += ' with ' + stuffing.name;
+                })
+                orderList += hamburger + '\n';
+            } else {
+                orderList += '----- ' + item.name + '\n';
+            }
+        });
+        return orderList;
+    } else {
+        return 'The order is empty';
+    }
+};
+
 /* Pay for order */
 Order.prototype.payForOrder = function() {
     this.items.forEach(function (item) {
@@ -226,24 +247,20 @@ var sandw1 = new Hamburger(hamburgerOptions.SIZE_SMALL,
                            hamburgerOptions.STUFFING_SALAD,
                            hamburgerOptions.STUFFING_CHEESE);
 
-console.log(sandw1.calculatePrice());
-console.log(sandw1.calculateCalories());
-console.log(sandw1.getStuffing());
-console.log(sandw1.getSize());
+// console.log(sandw1.calculatePrice() + ' tugs is the hamburger price');
+// console.log(sandw1.calculateCalories() + ' cals is the hamburger calorific value');
+// console.log(sandw1.getStuffing() + ' are toppings in this hamburger');
+// console.log(sandw1.getSize() + ' is the size of this hamburger');
 
 var order1 = new Order();
 order1.addItems(salad1, drink1, sandw1);
+console.log(order1.printOrder());
 
 var price1 = order1.totalPrice();
 var calories1 = order1.totalCalories();
 console.log('Order 1 price: ' + price1 + ' tugs, calories: ' + calories1 + ' cals');
 
-order1.rmItem('Ceasar');
-price1 = order1.totalPrice();
-calories1 = order1.totalCalories();
-console.log('Order 1 price: ' + price1 + ' tugs, calories: ' + calories1 + ' cals');
-
 order1.rmItem('small size');
 price1 = order1.totalPrice();
 calories1 = order1.totalCalories();
-console.log('Order 1 price: ' + price1 + ' tugs, calories: ' + calories1 + ' cals');
+console.log('Order 1 minus humburger price: ' + price1 + ' tugs, calories: ' + calories1 + ' cals');
