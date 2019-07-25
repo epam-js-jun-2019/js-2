@@ -41,8 +41,6 @@ Order.prototype.makePayment = function() {
 function Food(description) {
   this.description = description || 'Nameless position';
   this.typeOfFood;
-  this.size;
-  this.addition;
 }
 
 // Food methods
@@ -80,6 +78,21 @@ Food.prototype.showSize = function() {
 // Class Hamburger
 function Hamburger(description) {
   Food.call(this, description);
+  this.size;
+  this.addition;
+  this.chooseSize = function(type) {
+    Food.prototype.chooseSize.call(this, type, Hamburger.SIZES);
+  };
+  this.chooseAddition = function(type) {
+    Food.prototype.chooseAddition.call(this, type, Hamburger.ADDITIONS);
+  };
+  this.chooseType = null;
+  this.showPrice = function() {
+    return this.size.tugric + this.addition.tugric;
+  };
+  this.showCalories = function() {
+    return this.size.calories + this.addition.calories;
+  };
 }
 Hamburger.prototype = Object.create(Food.prototype);
 
@@ -94,17 +107,14 @@ Hamburger.ADDITIONS = [
   { type: 'Potato', tugric: 15, calories: 10 }
 ];
 
-// Hamburger methods
-Hamburger.prototype.showPrice = function() {
-  return this.size.tugric + this.addition.tugric;
-};
-Hamburger.prototype.showCalories = function() {
-  return this.size.calories + this.addition.calories;
-};
-
 // Class Salad
 function Salad(description) {
   Food.call(this, description);
+  this.chooseType = function(type) {
+    Food.prototype.chooseType.call(this, type, Salad.MENU);
+  };
+  this.chooseAddition = null;
+  this.chooseSize = null;
 }
 Salad.prototype = Object.create(Food.prototype);
 
@@ -117,6 +127,11 @@ Salad.MENU = [
 // Class Drink
 function Drink(description) {
   Food.call(this, description);
+  this.chooseType = function(type) {
+    Food.prototype.chooseType.call(this, type, Drink.MENU);
+  };
+  this.chooseAddition = null;
+  this.chooseSize = null;
 }
 Drink.prototype = Object.create(Food.prototype);
 
@@ -138,9 +153,9 @@ Drink.MENU = [
 ##
 #                           Food Interface
 ##
-### chooseAddition(type, menu)    || Sets addition from menu
-### chooseType(type, menu)        || Sets type from menu
-### chooseSize(type, menu)        || Sets size from menu
+### chooseAddition(type)          || Sets addition from menu
+### chooseType(type)              || Sets type from menu
+### chooseSize(type)              || Sets size from menu
 ### showSize()                    || Shows size type
 ### showAddition()                || Shows addition type
 ### showType()                    || Shows type
@@ -157,17 +172,18 @@ var mySalad = new Salad('Olivier salad');
 var myDrink = new Drink('Cola');
 
 // Configurating food properties
-myHamb.chooseSize('Large', Hamburger.SIZES); // 'Large' or 'Small'
-myHamb.chooseAddition('Potato', Hamburger.ADDITIONS); // 'Cheese', 'Salad' or 'Potato'
-mySalad.chooseType('Olivier', Salad.MENU); // 'Caesar' or 'Olivier'
-myDrink.chooseType('Cola', Drink.MENU); // 'Coffee' or 'Cola'
+myHamb.chooseSize('Small'); // 'Large' or 'Small'
+myHamb.chooseAddition('Potato'); // 'Cheese', 'Salad' or 'Potato'
+mySalad.chooseType('Olivier'); // 'Caesar' or 'Olivier'
+myDrink.chooseType('Cola'); // 'Coffee' or 'Cola'
 
 // Adding items to the order
 myOrder.addToOrder(myHamb, myDrink, mySalad);
+
 // Deleting item from the order
-// myOrder.deleteFromOrder(mySalad);
+// myOrder.deleteFromOrder(myDrink);
 
 // Make payment
-// myOrder.makePayment();
+myOrder.makePayment();
 
 console.log(myOrder.calcTotalPrice());
