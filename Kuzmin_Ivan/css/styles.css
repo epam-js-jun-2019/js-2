@@ -1,0 +1,99 @@
+html, body {
+  width: 100%;
+  height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.menu {
+  width: 900px;
+  height: 100vh;
+  margin: auto;
+  border: 1px solid #ccc;
+  background-color: #fff;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu__navigation,
+.menu__summary {
+  width: 100%;
+  outline: 1px solid #ccc;
+  text-align: center;
+}
+
+.menu__navigation {
+  flex: 2;
+}
+
+.menu__summary {
+  flex: 1;
+  background-color: #faf6f6;
+}
+
+.menu__navigation-header {
+  margin: 0;
+  padding-top: 50px;
+  box-sizing: border-box;
+}
+
+.menu__navigation-panel {
+  width: 100%;
+  height: 85%;
+  padding: 20px;
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.menu__navigation-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.menu__navigation-item-text::first-letter {
+  text-transform: uppercase;
+}
+
+.menu__navigation-item-price,
+.menu__navigation-item-calories {
+  padding: 0;
+  margin: 0;
+}
+
+.menu__navigation-item-input {
+  display: block;
+}
+
+.menu__summary-position {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+}
+
+.menu__summary-remove {
+  cursor: pointer;
+}
+
+.menu__summary-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.menu__summary-cart {
+  flex: 2;
+  border: 1px solid black;
+}
+
+.menu__summary-final {
+  flex: 1;
+  border: 1px solid black;
+}
