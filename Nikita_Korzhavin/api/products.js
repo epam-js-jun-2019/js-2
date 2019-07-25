@@ -1,8 +1,8 @@
 // product используются для моделирования начинок, типов салатов и напитков
-function Product(price, calories, name) {
-  this.price = price || 0;
-  this.calories = calories || 0;
-  this.name = name;
+function Product(options) {
+  this.price = options.price || 0;
+  this.calories = options.calories || 0;
+  this.name = options.name || undefined;
 }
 
 Product.prototype.calculatePrice = function() {

@@ -9,6 +9,7 @@ function CombinedProduct() {
 CombinedProduct.prototype.calculatePrice = function() {
   return calculateSmth('price', this.productParts);
 };
+
 CombinedProduct.prototype.calculateCalories = function() {
   return calculateSmth('calories', this.productParts);
 };
