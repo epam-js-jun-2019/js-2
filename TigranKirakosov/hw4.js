@@ -44,19 +44,9 @@ function Food(description) {
 }
 
 // Food methods
-Food.prototype.chooseType = function(type, menu) {
-  return (this.typeOfFood = menu.filter(function(food) {
+Food.prototype.chooseType = function(type, menu, field = 'typeOfFood') {
+  return (this[field] = menu.filter(function(food) {
     return food.type === type;
-  })[0]);
-};
-Food.prototype.chooseSize = function(type, menu) {
-  return (this.size = menu.filter(function(size) {
-    return size.type === type;
-  })[0]);
-};
-Food.prototype.chooseAddition = function(type, menu) {
-  return (this.addition = menu.filter(function(addition) {
-    return addition.type === type;
   })[0]);
 };
 Food.prototype.showAddition = function() {
@@ -81,12 +71,11 @@ function Hamburger(description) {
   this.size;
   this.addition;
   this.chooseSize = function(type) {
-    Food.prototype.chooseSize.call(this, type, Hamburger.SIZES);
+    Food.prototype.chooseType.call(this, type, Hamburger.SIZES, 'size');
   };
   this.chooseAddition = function(type) {
-    Food.prototype.chooseAddition.call(this, type, Hamburger.ADDITIONS);
+    Food.prototype.chooseType.call(this, type, Hamburger.ADDITIONS, 'addition');
   };
-  this.chooseType = null;
   this.showPrice = function() {
     return this.size.tugric + this.addition.tugric;
   };
@@ -113,8 +102,6 @@ function Salad(description) {
   this.chooseType = function(type) {
     Food.prototype.chooseType.call(this, type, Salad.MENU);
   };
-  this.chooseAddition = null;
-  this.chooseSize = null;
 }
 Salad.prototype = Object.create(Food.prototype);
 
@@ -130,8 +117,6 @@ function Drink(description) {
   this.chooseType = function(type) {
     Food.prototype.chooseType.call(this, type, Drink.MENU);
   };
-  this.chooseAddition = null;
-  this.chooseSize = null;
 }
 Drink.prototype = Object.create(Food.prototype);
 
@@ -153,9 +138,7 @@ Drink.MENU = [
 ##
 #                           Food Interface
 ##
-### chooseAddition(type)          || Sets addition from menu
 ### chooseType(type)              || Sets type from menu
-### chooseSize(type)              || Sets size from menu
 ### showSize()                    || Shows size type
 ### showAddition()                || Shows addition type
 ### showType()                    || Shows type
@@ -186,4 +169,4 @@ myOrder.addToOrder(myHamb, myDrink, mySalad);
 // Make payment
 myOrder.makePayment();
 
-console.log(myOrder.calcTotalPrice());
+console.log(myOrder.calcTotalCalories());
