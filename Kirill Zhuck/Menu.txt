@@ -1,0 +1,178 @@
+function Food(price, calories) {
+    this.price = price;
+    this.calories = calories;
+}
+
+Food.prototype.calculatePrice = function() {
+    return this.price;
+}
+Food.prototype.calculateCalories = function() {
+    return this.calories;
+}
+
+function Hamburger(size, stuffing) {
+    Food.call(this);
+    this.size = new Food(size.price, size.calories);
+    this.stuffing = new  Food(stuffing.price, stuffing.calories);
+    this.price = size.price + stuffing.price;
+    this.calories = size.calories + stuffing.calories;
+}
+
+Hamburger.prototype = Object.create(Food.prototype);
+Hamburger.SIZE_SMALL = {
+    "name": 'Small hamburger',
+    "price": 50,
+    "calories": 20
+}
+Hamburger.SIZE_LARGE = {
+    "name": 'Large hamburger',
+    "price": 100,
+    "calories": 40
+}
+Hamburger.STUFFING_CHEESE = {
+    "name": "Cheese",
+    "price": 10,
+    "calories": 20
+}
+Hamburger.STUFFING_SALAD = {
+    "name": "Salad",
+    "price": 20,
+    "calories": 5
+}
+Hamburger.STUFFING_POTATO = {
+    "name": "Potato",
+    "price": 15,
+    "calories": 10
+}
+
+Hamburger.prototype.getSize = function() {
+    return this.size;
+}
+Hamburger.prototype.getStuffing = function() {
+    return this.stuffing;
+}
+
+function Salad(name, weight) {
+    Food.call(this);
+    this.name = name;
+    this.price = name.price / 100 * weight;
+    this.calories = name.calories / 100 * weight;
+}
+
+Salad.prototype = Object.create(Food.prototype);
+
+Salad.CAESAR = {
+    "name": "Caesar",
+    "price": 100,
+    "calories": 20
+}
+Salad.OLIVIE = {
+    "name": "Olivie",
+    "price": 100,
+    "calories": 20
+}
+
+function Drink(name) {
+    Food.call(this);
+    this.name = name;
+    this.price = name.price;
+    this.calories = name.calories;
+}
+
+Drink.prototype = Object.create(Food.prototype);
+
+Drink.COLA = {
+    "name": "Coca Cola",
+    "price": 50,
+    "calories": 40
+}
+Drink.COFFEE = {
+    "name": "Coffee",
+    "price": 80,
+    "calories": 20
+}
+
+function Order() {
+    this.positionOfTheOrder = [].slice.call(arguments);
+    this.isPaid = false;
+  }
+
+Order.prototype.calculateTotalPrice = function () {
+    var totalPrice = 0;
+    for (var i = 0; i < this.positionOfTheOrder.length; i++) {
+        totalPrice += this.positionOfTheOrder[i].calculatePrice();
+    }
+    console.log(totalPrice);
+}
+
+Order.prototype.calculateTotalCalories = function () {
+    var totalCalories = 0;
+    for (var i = 0; i < this.positionOfTheOrder.length; i++) {
+        totalCalories += this.positionOfTheOrder[i].calculateCalories();
+    }
+    console.log(totalCalories);
+}
+
+Order.prototype.addToTheOrder = function(item) {
+    if  (!this.isPaid) {
+        this.positionOfTheOrder.push(item);
+    } else {
+        console.log("The order is already paid");
+    }
+}
+
+Order.prototype.removeFromTheOrder = function(item) {
+    if (!this.isPaid) {
+        this.positionOfTheOrder.splice(this.positionOfTheOrder.indexOf(item), 1);
+    } else {
+        console.log("The order is already paid");
+    }
+}
+
+Order.prototype.getCurrentOrder = function() {
+    if (this.positionOfTheOrder.length == 0) {
+        console.log("The order is empty");
+    }
+    else {
+        return this.positionOfTheOrder;
+    }
+}
+
+Order.prototype.getOrderStatus = function() {
+    if (!this.isPaid) {
+        console.log("The order is not yet paid");
+    }
+    else {
+        console.log("The order is paid");
+    }
+}
+
+Order.prototype.payForTheOrder = function() {
+    if (this.positionOfTheOrder.length != 0) {
+        this.isPaid = true;
+        Object.freeze(this);
+        console.log("The order is successfully paid");
+    } else {
+        console.log("The order is already paid");
+    }
+}
+
+var newHamburger = new Hamburger(Hamburger.SIZE_LARGE, Hamburger.STUFFING_CHEESE);
+var anotherHamburger = new Hamburger(Hamburger.SIZE_SMALL, Hamburger.STUFFING_POTATO);
+var Olivie = new Salad(Salad.Olivie, 250);
+var cola = new Drink(Drink.COLA);
+var coffee = new Drink(Drink.COFFEE);
+
+var order = new Order();
+order.getCurrentOrder();
+order = new Order(newHamburger, Olivie);
+order.getCurrentOrder();
+order.getOrderStatus();
+order.addToTheOrder(anotherHamburger);
+order.removeFromTheOrder(newHamburger);
+order.getCurrentOrder();
+order.payForTheOrder();
+order.addToTheOrder(coffee);
+order.getOrderStatus();
+order.calculateTotalCalories();
+order.calculateTotalPrice();
