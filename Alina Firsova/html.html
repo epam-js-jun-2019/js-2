@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Order</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<p>*Sorry, I am not a designer :)</p>
+<div class="main">
+<div id="order" class="order">
+    <div id="Hamburger" class="foodClass">
+        <p>ГАМБУРГЕР</p>
+        <p>Размер:</p>
+        
+    
+                <p><input type="radio" name="HamburgerSize" value="Большой" checked>Большой</p>
+                <p><input type="radio"  name="HamburgerSize" value="Маленький">Маленький</p>
+          
+       <div class="element"> <p>Начинка:
+        <select id="hamburgerStuffing"><option value="cheese">Сыр</option>
+                                        <option value="salad">Салат</option>
+                                        <option value="potato">Картошка</option>
+                                </select></p>
+      </div>
+            <button onclick="add_to_order(this)">Добавить гамбургер</button>
+        </div>
+    <div id="Salad" class="foodClass">
+        <p>САЛАТ</p>
+        
+                <div><input type="radio" id="olivye" name="saladType" value="Оливье" checked>Оливье</div>
+                <div><input type="radio" id="caesar" name="saladType" value="Цезарь">Цезарь</div>
+    
+        <div><input type="number" value="100" id="saladWeight"> грамм</div>
+    <button onclick="add_to_order(this)">Добавить салат </button></div>
+    <div id="Drink" class="foodClass">
+        <p>НАПИТОК</p>
+               <div><input type="radio" name="drinkType" value="Кофе" checked>Кофе</div>
+                <div><input type="radio" name="drinkType" value="Кола">Кола</div>
+        <button onclick="add_to_order(this)">Добавить напиток</button>
+    </div>   
+    </div>
+    <div id="check" class="check">
+        <p>Ваш Заказ:</p>  
+    </div>
+    <div id="total">
+</div>
+<div class="button">
+<button onclick="pay()">Подтвердить и оплатить</button>
+</div>        
+</div><script src="js.js"></script>
+</body>
+</html>
