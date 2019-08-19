@@ -12,7 +12,7 @@ function MenuItem(options) {
 
 /* Get the item name */
 MenuItem.prototype.getName = function () {
-    if(this.name === undefined) {
+    if(!this.name) {
         return this.size.name;
     }
     return this.name;
@@ -220,7 +220,7 @@ Order.prototype.payForOrder = function() {
 /* Calculate order cost */
 Order.prototype.totalPrice = function () {
     var totalPrice = this.items.reduce(function (acc, cur) {
-        if(cur.price === undefined) {
+        if(!cur.price) {
             return acc + cur.calculatePrice();
         };
         return acc + cur.price;
@@ -231,7 +231,7 @@ Order.prototype.totalPrice = function () {
 /* Calculate order calories */
 Order.prototype.totalCalories = function () {
     var totalCalories = this.items.reduce(function (acc, cur) {
-        if(cur.calories === undefined) {
+        if(!cur.calories) {
             return acc + cur.calculateCalories();
         }
         return acc + cur.calories;
