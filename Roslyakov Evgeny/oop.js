@@ -71,7 +71,7 @@ hamburgerOptions.STUFFING_POTATO = {
     calories: 10
 };
 
-/* Get the humburger size (name) */
+/* Get the humburger size (= its name) */
 Hamburger.prototype.getSize = function () {
     return this.getName.call(this);
 };
@@ -161,7 +161,7 @@ function Order() {
     this.items = [];
 };
 
-/* Add new item(s) in order */
+/* Add new item(s) to the order */
 Order.prototype.addItems = function() {
     this.items = this.items.concat([].slice.call(arguments));
     return this;
@@ -169,7 +169,7 @@ Order.prototype.addItems = function() {
 
 /* Delete selected item from the order */
 Order.prototype.rmItem = function(rmName) {
-    if(this.items.length !== 0) {
+    if(this.items.length) {
         this.items = this.items.filter(function (item) {
             if(!item.name) {
                 return item.size.name !== rmName;
@@ -185,7 +185,7 @@ Order.prototype.rmItem = function(rmName) {
 /* Print the order contents  */
 Order.prototype.printOrder = function() {
     var orderList = '----- the order contains:\n';
-    if(this.items.length !== 0) {
+    if(this.items.length) {
         this.items.forEach(function (item) {
             if(!item.name) {
                 var hamburger = '----- ' + item.size.name + ' hamburger';
@@ -203,7 +203,7 @@ Order.prototype.printOrder = function() {
     }
 };
 
-/* Pay for order */
+/* Pay for the order */
 Order.prototype.payForOrder = function() {
     this.items.forEach(function (item) {
         if(!item.name) {
@@ -217,7 +217,7 @@ Order.prototype.payForOrder = function() {
     return this.totalPrice();
 };
 
-/* Calculate order cost */
+/* Calculate the order total */
 Order.prototype.totalPrice = function () {
     var totalPrice = this.items.reduce(function (acc, cur) {
         if(!cur.price) {
@@ -255,12 +255,13 @@ var sandw1 = new Hamburger(hamburgerOptions.SIZE_SMALL,
 var order1 = new Order();
 order1.addItems(salad1, drink1, sandw1);
 console.log(order1.printOrder());
+console.log(order1.rmItem('Ceasar'));
 
-var price1 = order1.totalPrice();
-var calories1 = order1.totalCalories();
-console.log('Order 1 price: ' + price1 + ' tugs, calories: ' + calories1 + ' cals');
+// var price1 = order1.totalPrice();
+// var calories1 = order1.totalCalories();
+// console.log('Order 1 price: ' + price1 + ' tugs, calories: ' + calories1 + ' cals');
 
-order1.rmItem('small size');
-price1 = order1.totalPrice();
-calories1 = order1.totalCalories();
-console.log('Order 1 minus humburger price: ' + price1 + ' tugs, calories: ' + calories1 + ' cals');
+// order1.rmItem('small size');
+// price1 = order1.totalPrice();
+// calories1 = order1.totalCalories();
+// console.log('Order 1 minus humburger price: ' + price1 + ' tugs, calories: ' + calories1 + ' cals');
