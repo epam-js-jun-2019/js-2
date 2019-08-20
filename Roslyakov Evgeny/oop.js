@@ -13,18 +13,24 @@ function MenuItem(options) {
 /* Get the item name */
 MenuItem.prototype.getName = function () {
     if(!this.name) {
-        return this.size.name;
+        return "it doesn't have name";
     }
     return this.name;
 };
 
 /* Get the item price */
 MenuItem.prototype.getPrice = function () {
+    if(!this.name) {
+        return "it doesn't have price";
+    }
     return this.price;
 };
 
 /* Get the item calories */
 MenuItem.prototype.getCalories = function () {
+    if(!this.name) {
+        return "it doesn't have calories";
+    }
     return this.calories;
 };
 
@@ -73,7 +79,10 @@ hamburgerOptions.STUFFING_POTATO = {
 
 /* Get the humburger size (= its name) */
 Hamburger.prototype.getSize = function () {
-    return this.getName.call(this);
+    if(!this.size.name) {
+        return "it doesn't have sizename";
+    }
+    return this.size.name;
 };
 
 /* Get the humburger stuffing */
@@ -172,9 +181,9 @@ Order.prototype.rmItem = function(rmName) {
     if(this.items.length) {
         this.items = this.items.filter(function (item) {
             if(!item.name) {
-                return item.size.name !== rmName;
+                return item.size.name !== rmName; // in case of deleting the hamburger 
             }
-            return item.name !== rmName;
+            return item.name !== rmName; // in case of deleting the others
         });
         return this.items;
     } else {
@@ -184,7 +193,7 @@ Order.prototype.rmItem = function(rmName) {
 
 /* Print the order contents  */
 Order.prototype.printOrder = function() {
-    var orderList = '----- the order contains:\n';
+    var orderList = '_________ the order contains: _________\n';
     if(this.items.length) {
         this.items.forEach(function (item) {
             if(!item.name) {
@@ -197,7 +206,8 @@ Order.prototype.printOrder = function() {
                 orderList += '----- ' + item.name + '\n';
             }
         });
-        return orderList;
+        orderList += '_____________________________________________\n'
+        return orderList += '_________ total: ' + this.totalPrice() + ' tugs _________';
     } else {
         return 'The order is empty';
     }
@@ -247,21 +257,16 @@ var sandw1 = new Hamburger(hamburgerOptions.SIZE_SMALL,
                            hamburgerOptions.STUFFING_SALAD,
                            hamburgerOptions.STUFFING_CHEESE);
 
-// console.log(sandw1.calculatePrice() + ' tugs is the hamburger price');
-// console.log(sandw1.calculateCalories() + ' cals is the hamburger calorific value');
-// console.log(sandw1.getStuffing() + ' are toppings in this hamburger');
-// console.log(sandw1.getSize() + ' is the size of this hamburger');
-
 var order1 = new Order();
 order1.addItems(salad1, drink1, sandw1);
 console.log(order1.printOrder());
-console.log(order1.rmItem('Ceasar'));
+console.log('\n\nDELETE THE CEASAR CALAD FROM THE ORDER:');
+order1.rmItem('Ceasar');
+console.log(order1.printOrder());
+console.log('\n\nDELETE THE SMALL SIZE HMBURGER FROM THE ORDER:');
+order1.rmItem('small size');
+console.log(order1.printOrder());
 
 // var price1 = order1.totalPrice();
 // var calories1 = order1.totalCalories();
 // console.log('Order 1 price: ' + price1 + ' tugs, calories: ' + calories1 + ' cals');
-
-// order1.rmItem('small size');
-// price1 = order1.totalPrice();
-// calories1 = order1.totalCalories();
-// console.log('Order 1 minus humburger price: ' + price1 + ' tugs, calories: ' + calories1 + ' cals');
