@@ -1,4 +1,4 @@
-var calculateSmth = require('./calculateSmthInArray');
+var { calculatePrice, calculateCalories } = require('./calculateSmthInArray');
 
 function CombinedProduct() {
   // принимаем все объекты products (можно найти класс в products.js)
@@ -7,11 +7,11 @@ function CombinedProduct() {
 }
 
 CombinedProduct.prototype.calculatePrice = function() {
-  return calculateSmth('price', this.productParts);
+  return calculatePrice(this.productParts);
 };
 
 CombinedProduct.prototype.calculateCalories = function() {
-  return calculateSmth('calories', this.productParts);
+  return calculateCalories(this.productParts);
 };
 
 module.exports = CombinedProduct;

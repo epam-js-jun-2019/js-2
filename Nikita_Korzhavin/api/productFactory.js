@@ -1,6 +1,7 @@
 var Hamburger = require('../hamburger.js');
 var Drink = require('../drinks.js');
 var Salad = require('../salad.js');
+var CombinedProduct = require('./combinedProducts');
 
 function ProductFactory() {}
 
@@ -16,7 +17,7 @@ ProductFactory.prototype.newProduct = function(options) {
       this.product = Salad;
       break;
     default:
-      this.product = undefined;
+      this.product = CombinedProduct;
       break;
   }
   return new this.product(options);

@@ -7,9 +7,9 @@ var Order = require('./order.js');
 
 // --------------------------------заказ-----------------------------
 
-/*
+
 // так мы передаем в заказ то, что хотим заказать ))
-var optionsHam = { name: 'hamburger', size: 'small', stuffing: 'cheese' };
+/*var optionsHam = { name: 'hamburger', size: 'small', stuffing: 'cheese' };
 var optionsDrink = { name: 'drink', type: 'coke' };
 var optionsSalad = { name: 'salad', type: 'cesar' };
 
@@ -20,11 +20,15 @@ var order = new Order();
 // по нему же и ищем в массиве товаров тот, который хотим удалить (используя deleteProduct)
 // в pay() передаем просто сумму денег, которую хотим заплатить за заказ
 order.addProduct(optionsSalad);
+console.log(order);
 order.deleteProduct(optionsSalad);
-order.calculatePrice();
-order.calculateCalories();
+console.log(order);
+order.addProduct(optionsDrink);
+order.addProduct(optionsHam);
+console.log(order.calculatePrice());
+console.log(order.calculateCalories());
 order.pay(123123);
-*/
+console.log(order);*/
 
 // --------------------------------hamburger-----------------------------
 
@@ -38,4 +42,5 @@ console.log(ham.calculatePrice());
 console.log(ham.calculateCalories());
 console.log(ham.getSize());
 console.log(ham.getStuffing());
+
 */

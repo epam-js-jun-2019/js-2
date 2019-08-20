@@ -39,8 +39,11 @@ function paidOrder(arr) {
   return Object.freeze(arr);
 }
 
-exports.arrayWithDeletedProduct = arrayWithDeletedProduct;
-exports.arrayWithAddedProduct = arrayWithAddedProduct;
-exports.calculateOrderPrice = calculateOrderPrice;
-exports.calculateOrderCalories = calculateOrderCalories;
-exports.paidOrder = paidOrder;
+module.exports = {
+  arrayWithDeletedProduct: arrayWithDeletedProduct,
+  arrayWithAddedProduct: arrayWithAddedProduct,
+  calculateOrderPrice: calculateOrderPrice,
+  calculateOrderCalories: calculateOrderCalories,
+  paidOrder: paidOrder
+}
+

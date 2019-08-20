@@ -2,14 +2,14 @@
 function Product(options) {
   this.price = options.price || 0;
   this.calories = options.calories || 0;
-  this.name = options.name || undefined;
+  this.name = options.name || "";
 }
 
-Product.prototype.calculatePrice = function() {
+Product.prototype.getPrice = function() {
   return this.price;
 };
 
-Product.prototype.calculateCalories = function() {
+Product.prototype.getCalories = function() {
   return this.calories;
 };
 
