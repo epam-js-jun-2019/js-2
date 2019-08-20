@@ -20,7 +20,7 @@ MenuItem.prototype.getName = function () {
 
 /* Get the item price */
 MenuItem.prototype.getPrice = function () {
-    if(!this.name) {
+    if(!this.price) {
         return "it doesn't have price";
     }
     return this.price;
@@ -28,7 +28,7 @@ MenuItem.prototype.getPrice = function () {
 
 /* Get the item calories */
 MenuItem.prototype.getCalories = function () {
-    if(!this.name) {
+    if(!this.calories) {
         return "it doesn't have calories";
     }
     return this.calories;
