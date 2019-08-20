@@ -23,27 +23,8 @@ function arrayWithAddedProduct(arr, options) {
   return arr;
 }
 
-function calculateOrderPrice(arr) {
-  return arr.reduce(function(acc, prod) {
-    return acc + prod.calculatePrice();
-  }, 0);
-}
-
-function calculateOrderCalories(arr) {
-  return arr.reduce(function(acc, prod) {
-    return acc + prod.calculateCalories();
-  }, 0);
-}
-
-function paidOrder(arr) {
-  return Object.freeze(arr);
-}
-
 module.exports = {
   arrayWithDeletedProduct: arrayWithDeletedProduct,
   arrayWithAddedProduct: arrayWithAddedProduct,
-  calculateOrderPrice: calculateOrderPrice,
-  calculateOrderCalories: calculateOrderCalories,
-  paidOrder: paidOrder
 }
 
