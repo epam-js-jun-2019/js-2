@@ -1,7 +1,4 @@
-// Cart
 var cart = [];
-
-// Possible menu positions
 var menu = [
   {
     type: 'hamburger',
@@ -75,7 +72,6 @@ var menu = [
   }
 ];
 
-// Classes
 // Food class
 function Food(size, stuffing) {
   this.size = size;
@@ -125,6 +121,7 @@ Salad.prototype.getPosition = function() {
   });
 }
 Salad.prototype.calculatePrice = function() {
+  
   var salad = this.getPosition();
   return this.getSize() / salad.size * salad.price;
 }
@@ -150,13 +147,13 @@ function drawElements(menu) {
     var MENU_ITEM_PRICE_CLASS = 'menu__navigation-item-price';
     var MENU_ITEM_CALORIES_CLASS = 'menu__navigation-item-calories';
     var MENU_ITEM_BUTTON_CLASS = 'menu__navigation-item-button';
-    var MENU_ITEM_INPUT_CLASS = 'menu__navigation-item-input';
+    // var MENU_ITEM_INPUT_CLASS = 'menu__navigation-item-input';
 
     var HEADER_INNERTEXT = item.type + ': ' + (!saladOrDrink ? item.size  + ', ' : '') + item.stuffing;
     var PRICE_INNERTEXT = 'Price: ' + item.price + (saladOrDrink ? ' for ' + item.size + ' ' + mark : '');
     var CALORIES_INNERTEXT = 'Calories: ' + item.calories;
     var BUTTON_INNERTEXT = 'Buy me fatty :)';
-    var INPUT_PLACEHOLDER =  'Enter size here';
+    // var INPUT_PLACEHOLDER =  'Enter size here';
 
     var menuItem = document.createElement('div');
     menuItem.className = MENU_ITEM_CLASS;
@@ -182,15 +179,15 @@ function drawElements(menu) {
 
     menuItem.append(headerText, price, calories);
 
-    if (saladOrDrink) {
-      var inputSize = document.createElement('input');
-      inputSize.className = MENU_ITEM_INPUT_CLASS;
-      inputSize.placeholder = INPUT_PLACEHOLDER;
-      inputSize.addEventListener('input', function(event) {
-        menuItem.dataset.size = event.target.value;
-      })
-      menuItem.append(inputSize);
-    }
+    // if (saladOrDrink) {
+    //   var inputSize = document.createElement('input');
+    //   inputSize.className = MENU_ITEM_INPUT_CLASS;
+    //   inputSize.placeholder = INPUT_PLACEHOLDER;
+    //   inputSize.addEventListener('input', function(event) {
+    //     menuItem.dataset.size = event.target.value;
+    //   })
+    //   menuItem.append(inputSize);
+    // }
 
     menuItem.appendChild(buyButton);
 
@@ -200,10 +197,12 @@ function drawElements(menu) {
 }
 
 function setBuyButtonOnClick(className) {
+  
   Array.prototype.slice
     .call(document.getElementsByClassName(className))
     .forEach(function(button) {
       button.addEventListener('click', function(event) {
+
         var item = event.target.closest('.menu__navigation-item');
         var size = item.dataset.size;
         var type = item.dataset.type;
@@ -219,7 +218,7 @@ function setBuyButtonOnClick(className) {
           case 'salad':
             cart.push(new Salad(size, stuffing));
             break;
-        }
+        };
 
         renderCart(cart);
       });

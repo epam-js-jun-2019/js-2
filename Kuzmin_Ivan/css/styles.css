@@ -10,7 +10,6 @@ html, body {
   margin: auto;
   border: 1px solid #ccc;
   background-color: #fff;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -22,15 +21,19 @@ html, body {
   width: 100%;
   outline: 1px solid #ccc;
   text-align: center;
+  
 }
 
 .menu__navigation {
-  flex: 2;
+  flex: 1;
+  height: 300px;
+ 
 }
 
 .menu__summary {
   flex: 1;
   background-color: #faf6f6;
+  height: 150px;
 }
 
 .menu__navigation-header {
@@ -46,8 +49,8 @@ html, body {
   box-sizing: border-box;
 
   display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
 
 .menu__navigation-item {
