@@ -4,7 +4,7 @@
 * * * * * * * ORDER * * * * * * * 
 */
 
-function Order () {
+function Order() {
     this.products = [];
 }
 
@@ -12,56 +12,39 @@ function Order () {
 * Accept data from added food
 */
 
-Order.prototype.acceptHumburger = function (Hamburger) {
-    this.products.push(Hamburger);
-}
-
-Order.prototype.acceptSalad = function (Salad) {
-    this.products.push(Salad);
-}
-
-Order.prototype.acceptDrink = function (Drink) {
-    this.products.push(Drink);
+Order.prototype.acceptProduct = function(product) {
+    this.products = this.products.concat(product);
 }
 
 /**
 * Delete data from order
 */
 
-Order.prototype.deleteProduct = function (name) {
+Order.prototype.deleteProduct = function(name) {
     this.products = this.products.filter((arg) => arg !== name);
 }
 
 /**
- * Get know a price
+ * Get know a price and calories
  */
-Order.prototype.calculatePrice = function () {
 
-    this.totalPrice = this.products.reduce(function(acc, obj){
+Order.prototype.calculateProduct = function() {
+    this.totalPrice = this.products.reduce(function(acc, obj) {
         acc += obj.price;
         return acc;
     }, 0);
 
-}
-
-/**
- * Get know calories
- */
-
-Order.prototype.calculateCalories = function () {
-    
-    this.totalCalories = this.products.reduce(function(acc, obj){
+    this.totalCalories = this.products.reduce(function(acc, obj) {
         acc += obj.calories;
         return acc;
     }, 0);
-
 }
 
 /**
 * Paid order
 */
 
-Order.prototype.paid = function () {
+Order.prototype.paid = function() {
 
     this.products.forEach(Object.freeze);
     Object.freeze(this.products);
@@ -93,28 +76,22 @@ function Hamburger(size, stuffing) {
 
     if (stuffing[0][0]) {
 
-        priceOfStuffing = stuffing.reduce(function(acc, value){
+        priceOfStuffing = stuffing.reduce(function(acc, value) {
             acc += +value[0];
             return acc;
         },0);
 
-    } else {
-        priceOfStuffing = +stuffing[0];
-    }
-
-    hamPrice = +size[0] + priceOfStuffing;
-
-    if (stuffing[0][0]) {
-
-        caloriesOfStuffing = stuffing.reduce(function(acc, value){
+        caloriesOfStuffing = stuffing.reduce(function(acc, value) {
             acc += +value[1];
             return acc;
         },0);
 
     } else {
+        priceOfStuffing = +stuffing[0];
         caloriesOfStuffing = +stuffing[1];
     }
 
+    hamPrice = +size[0] + priceOfStuffing;
     hamCalories = +size[1] + caloriesOfStuffing;
 
     Food.call(this, hamPrice, hamCalories);
@@ -194,18 +171,14 @@ var drink = new Drink(Drink.COLA);
 var salad = new Salad(Salad.RUSSIAN_SALAD);
 var salad1 = new Salad(Salad.CAESAR);
 
-order.acceptHumburger(H1);
-order.acceptHumburger(H2);
-order.acceptDrink(drink);
-order.acceptSalad(salad);
+order.acceptProduct(H1);
+order.acceptProduct(H2);
+order.acceptProduct(drink);
+order.acceptProduct(salad);
 
 order.deleteProduct(H1);
 
-order.calculatePrice();
-order.calculateCalories();
-
-//console.log(order);
-
+order.calculateProduct();
 
 order.paid();
 
@@ -216,7 +189,7 @@ try {
 }
 
 try {
-    order.acceptSalad(salad1);
+    order.acceptProduct(salad1);
 } catch(e) {
     console.log("Изменение невозможно. Заказ оплачен.")
 }
